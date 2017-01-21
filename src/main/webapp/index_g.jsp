@@ -56,6 +56,10 @@ if ("c".equals(type) ) {
   try {
 
     response.reset();
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Pragma", "no-cache");
+    response.setIntHeader("Expires", 0);
+
     if (src.endsWith(".js") ) {
       response.setContentType("text/javascript;charset=UTF-8");
     } else if (src.endsWith(".json") ) {
@@ -105,6 +109,10 @@ if ("c".equals(type) ) {
 } else {
 
   response.reset();
+  response.setHeader("Cache-Control", "no-cache");
+  response.setHeader("Pragma", "no-cache");
+  response.setIntHeader("Expires", 0);
+
   response.setContentType("text/html;charset=UTF-8");
 
   Writer _out = response.getWriter();
@@ -129,6 +137,7 @@ if ("c".equals(type) ) {
     _out.close();
   }
 }
+
 %><%!
 //%%src%%
 %>
