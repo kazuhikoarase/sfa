@@ -8,28 +8,28 @@ BODY {
   background-color: #ffffff;
 }
 
-TABLE#memTbl {
+TABLE {
+  border-style: none;
+  border-spacing: 0px;
+}
+
+#memTbl > TABLE {
   font-size: 11pt;
 }
 
-TABLE.layout-tbl {
-  font-size: 8pt;
-}
-
-TABLE#memTbl > TBODY > TR > TD {
+#memTbl > TABLE > TBODY > TR > TD {
   padding: 2px 8px 2px 8px;
 }
 
-TABLE#memTbl > THEAD > TR {
+#memTbl > TABLE > THEAD > TR {
   color: #ffffff;
   background-color: #666666;
 }
 
-TABLE#memTbl > TBODY > TR:nth-of-type(even) {
+#memTbl > TABLE > TBODY > TR:nth-of-type(even) {
   background-color: #eeeeee;
 }
 
-TABLE {
-  border-style: none;
-  border-spacing: 0px;
+TABLE.layout-tbl {
+  font-size: 8pt;
 }

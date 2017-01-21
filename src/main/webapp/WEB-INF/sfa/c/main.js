@@ -147,8 +147,8 @@ $(function() {
         $tbody.append($tr);
       });
 
-      $('#memTbl').remove();
-      $('BODY').append($('<table></table>').attr('id', 'memTbl').
+      $('#memTbl').children().remove();
+      $('#memTbl').append($('<table></table>').
           append($thead).append($tbody) );
 
     }).fail(function(data) {
@@ -156,12 +156,15 @@ $(function() {
     });
   };
 
+
+  document.title = 'SFA | Memory Pool View';
+
+  $('BODY').append($('<div></div>').attr('id', 'memTbl') );
+
   var up = function() {
     updateMem();
     window.setTimeout(up, 2000);
   };
   up();
-
-  document.title = 'SFA | Memory Pool View';
 
 });
