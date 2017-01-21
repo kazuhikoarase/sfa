@@ -3,6 +3,11 @@
   font-family: arial, sans-serif;
 }
 
+BODY {
+  color: #000000;
+  background-color: #ffffff;
+}
+
 TABLE#memTbl {
   font-size: 11pt;
 }
@@ -16,12 +21,12 @@ TABLE#memTbl > TBODY > TR > TD {
 }
 
 TABLE#memTbl > THEAD > TR {
-  background-color: #666666;
   color: #ffffff;
+  background-color: #666666;
 }
 
 TABLE#memTbl > TBODY > TR:nth-of-type(even) {
-  background-color: #f0f0f0;
+  background-color: #eeeeee;
 }
 
 TABLE {

@@ -156,10 +156,12 @@ $(function() {
     });
   };
 
-  document.title = 'Memory View';
   var up = function() {
     updateMem();
     window.setTimeout(up, 2000);
   };
   up();
+
+  document.title = 'SFA | Memory Pool View';
+
 });
