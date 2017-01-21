@@ -1,3 +1,4 @@
+
 * {
   font-family: arial, sans-serif;
 }
@@ -13,6 +14,7 @@ TABLE.layout-tbl {
 TABLE#memTbl > TBODY > TR > TD {
   padding: 2px 8px 2px 8px;
 }
+
 TABLE#memTbl > THEAD > TR {
   background-color: #666666;
   color: #ffffff;
@@ -26,4 +28,3 @@ TABLE {
   border-style: none;
   border-spacing: 0px;
 }
-

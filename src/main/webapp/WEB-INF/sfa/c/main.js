@@ -31,8 +31,7 @@ $(function() {
   assertEquals('1,234', formatNumber(1234) );
   assertEquals('-1,234', formatNumber(-1234) );
   assertEquals('2,783,641,600', formatNumber(2783641600) );
-  
-  
+
   var createSVGElement = function(tagName) {
     return $(document.createElementNS(
         'http://www.w3.org/2000/svg', tagName) );
@@ -50,7 +49,9 @@ $(function() {
       contentType : 'application/json',
       data : JSON.stringify({"from" : "client"})
     }).done(function(data) {
+
 //      console.log(JSON.stringify(data) );
+
       var style = {
         initColor : '#ffcc00',
         usedColor : '#00ff00',
@@ -106,6 +107,7 @@ $(function() {
         drawLine(~~(w * usage.max / max) - 1, style.maxColor);
         return $svg;
       };
+
       var $thead = $('<thead></thead>');
       !function() {
         var $tr = $('<tr></tr>');
@@ -116,6 +118,7 @@ $(function() {
         $tr.append($('<th></th>').text('Collection usage') );
         $thead.append($tr);
       }();
+
       var $tbody = $('<tbody></tbody>');
       $.each(data.mem, function(i, mem) {
         var $tr = $('<tr></tr>');
@@ -143,6 +146,7 @@ $(function() {
 
         $tbody.append($tr);
       });
+
       $('#memTbl').remove();
       $('BODY').append($('<table></table>').attr('id', 'memTbl').
           append($thead).append($tbody) );

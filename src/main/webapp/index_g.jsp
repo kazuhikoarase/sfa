@@ -26,10 +26,15 @@ throws Exception {
   if (src != null) {
     return new StringReader(src);
   }
-  String dir = baseDir != null? baseDir :
-    getServletContext().getRealPath("/WEB-INF/sfa");
-  return new InputStreamReader(
-      new FileInputStream(new File(dir, path) ), "UTF-8");
+  File dir = new File(baseDir != null? baseDir :
+    getServletContext().getRealPath("/WEB-INF/sfa") );
+  File file = new File(dir, path);
+  if (!file.exists() ) {
+    return null;
+  } else if (!file.getCanonicalPath().startsWith(dir.getCanonicalPath() ) ) {
+    return null;
+  }
+  return new InputStreamReader(new FileInputStream(file), "UTF-8");
 }
 
 %><%
@@ -40,20 +45,26 @@ if ("c".equals(type) ) {
 
   String src = request.getParameter("src");
 
-  response.reset();
-  if (src.endsWith(".js") ) {
-    response.setContentType("text/javascript;charset=UTF-8");
-  } else if (src.endsWith(".json") ) {
-    response.setContentType("application/json;charset=UTF-8");
-  } else if (src.endsWith(".css") ) {
-    response.setContentType("text/css;charset=UTF-8");
-  } else {
-    response.setContentType("text/plain;charset=UTF-8");
+  Reader in = getResourceAsReader("c/" + src);
+  if (in == null) {
+    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    return;
   }
 
-  Writer _out = response.getWriter();
   try {
-    Reader in = getResourceAsReader("c/" + src);
+
+    response.reset();
+    if (src.endsWith(".js") ) {
+      response.setContentType("text/javascript;charset=UTF-8");
+    } else if (src.endsWith(".json") ) {
+      response.setContentType("application/json;charset=UTF-8");
+    } else if (src.endsWith(".css") ) {
+      response.setContentType("text/css;charset=UTF-8");
+    } else {
+      response.setContentType("text/plain;charset=UTF-8");
+    }
+
+    Writer _out = response.getWriter();
     try {
       char[] buf = new char[4096];
       int len;
@@ -61,16 +72,20 @@ if ("c".equals(type) ) {
         _out.write(buf, 0, len);
       }
     } finally {
-      in.close();
+      _out.close();
     }
   } finally {
-    _out.close();
+    in.close();
   }
 
 } else if ("s".equals(type) ) {
 
-  String[] svSrcList = { "_pre.js", request.getParameter("src"), "_post.js" };
-  ScriptEngine se = new ScriptEngineManager().getEngineByName("javascript");
+  String[] svSrcList = {
+      "_pre.js",
+      request.getParameter("src"),
+      "_post.js" };
+  ScriptEngine se = new ScriptEngineManager().
+      getEngineByName("javascript");
   se.put("request", request);
   se.put("response", response);
   for (String src : svSrcList) {
