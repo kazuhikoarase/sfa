@@ -51,7 +51,7 @@ $(function() {
     }).done(function(data) {
 
 //      console.log(JSON.stringify(data) );
-      $('#appVersion').text(data.version);
+      $('#appVersion').text('rev: ' + data.version);
 
       var style = {
         initColor : '#ffcc00',
