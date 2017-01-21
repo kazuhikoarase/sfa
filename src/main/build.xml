@@ -1,0 +1,8 @@
+<project default="build" basedir="webapp" >
+  <target name="build">
+    <property name="dest-jsp" value="index.jsp" />
+    <script language="javascript" src="build.js"/>
+    <copy file="index_g.jsp" tofile="${dest-jsp}" overwrite="true" />
+    <replace file="${dest-jsp}" token="//src" value="${srcString}"/>
+  </target>
+</project>

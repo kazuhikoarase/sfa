@@ -1,0 +1,29 @@
+* {
+  font-family: arial, sans-serif;
+}
+
+TABLE#memTbl {
+  font-size: 11pt;
+}
+
+TABLE.layout-tbl {
+  font-size: 8pt;
+}
+
+TABLE#memTbl > TBODY > TR > TD {
+  padding: 2px 8px 2px 8px;
+}
+TABLE#memTbl > THEAD > TR {
+  background-color: #666666;
+  color: #ffffff;
+}
+
+TABLE#memTbl > TBODY > TR:nth-of-type(even) {
+  background-color: #f0f0f0;
+}
+
+TABLE {
+  border-style: none;
+  border-spacing: 0px;
+}
+
