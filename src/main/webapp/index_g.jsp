@@ -26,6 +26,7 @@ throws Exception {
   if (src != null) {
     return new StringReader(src);
   }
+  //%%break%%
   File dir = new File(baseDir != null? baseDir :
     getServletContext().getRealPath("/WEB-INF/sfa") );
   File file = new File(dir, path);
@@ -39,6 +40,7 @@ throws Exception {
 
 %><%
 
+final String version = "%%version%%";
 final String type = request.getParameter("type");
 
 if ("c".equals(type) ) {
@@ -86,8 +88,10 @@ if ("c".equals(type) ) {
       "_post.js" };
   ScriptEngine se = new ScriptEngineManager().
       getEngineByName("javascript");
+  request.setAttribute("sfa-version", version);
   se.put("request", request);
   se.put("response", response);
+  se.put("application", this);
   for (String src : svSrcList) {
     Reader in = getResourceAsReader("s/" + src);
     try {
@@ -126,5 +130,5 @@ if ("c".equals(type) ) {
   }
 }
 %><%!
-//src
+//%%src%%
 %>

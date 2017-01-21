@@ -1,8 +1,14 @@
 <project default="build" basedir="webapp" >
   <target name="build">
+    <tstamp >
+      <format property="timestamp" pattern="yyyyMMddHHmmss" />
+    </tstamp>
     <property name="dest-jsp" value="index.jsp" />
     <script language="javascript" src="build.js"/>
     <copy file="index_g.jsp" tofile="${dest-jsp}" overwrite="true" />
-    <replace file="${dest-jsp}" token="//src" value="${srcString}"/>
+    <replace file="${dest-jsp}" token="%%version%%" value="${timestamp}" />
+    <replace file="${dest-jsp}" token="//%%break%%"
+      value="if (src == null) { return null; }" />
+    <replace file="${dest-jsp}" token="//%%src%%" value="${srcString}" />
   </target>
 </project>

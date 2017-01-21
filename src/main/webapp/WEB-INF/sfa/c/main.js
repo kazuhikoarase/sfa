@@ -51,6 +51,7 @@ $(function() {
     }).done(function(data) {
 
 //      console.log(JSON.stringify(data) );
+      $('#appVersion').text(data.version);
 
       var style = {
         initColor : '#ffcc00',
@@ -159,6 +160,7 @@ $(function() {
 
   document.title = 'SFA | Memory Pool View';
 
+  $('BODY').append($('<span></span>').attr('id', 'appVersion') );
   $('BODY').append($('<div></div>').attr('id', 'memTbl') );
 
   var up = function() {

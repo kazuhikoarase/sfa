@@ -13,6 +13,12 @@ TABLE {
   border-spacing: 0px;
 }
 
+#appVersion {
+  padding: 2px 4px 2px 4px;
+  font-size: 8pt;
+  background-color: #ffddaa;
+}
+
 #memTbl > TABLE {
   font-size: 11pt;
 }

@@ -1,4 +1,5 @@
 "use strict";
+
 //Nashorn / Rhino compatible
 if (typeof Java == 'undefined') {
   !function(Packages) {
@@ -28,8 +29,12 @@ var dto = function() {
   while ( (c = reqIn.read() ) != -1) {
     reqData += String.fromCharCode(c);
   }
+  var sys = Java.type('java.lang.System');
+  var version = '' + request.getAttribute('sfa-version');
   return {
     reqData : JSON.parse(reqData),
-    resData : {}
+    resData : {
+      version : version != '%%version%%' ? version : 'debug'
+    }
   };
 }();
