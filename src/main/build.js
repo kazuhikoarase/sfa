@@ -1,3 +1,4 @@
+
 var String = java.lang.String;
 var Integer = java.lang.Integer;
 var System = java.lang.System;
@@ -11,6 +12,7 @@ var FileInputStream = java.io.FileInputStream;
 var basedir = project.getProperty("basedir");
 var sout = new StringWriter();
 var out = new PrintWriter(sout);
+
 try {
 
   var buildSrc = function(dir, file) {
@@ -20,6 +22,7 @@ try {
     try {
       var line;
       while ( (line = srcIn.readLine() ) != null) {
+        line = line.trim();
         out.print('  src.append("');
         for (var i = 0; i < line.length(); i += 1) {
           var c = '' + line.substring(i, i + 1);

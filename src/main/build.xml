@@ -1,7 +1,7 @@
 <project default="build" basedir="webapp" >
   <target name="build">
     <tstamp >
-      <format property="timestamp" pattern="yyyyMMddHHmmss" />
+      <format property="timestamp" pattern="yyyy-MMdd-HHmm" />
     </tstamp>
     <property name="dest-jsp" value="index.jsp" />
     <script language="javascript" src="build.js"/>
