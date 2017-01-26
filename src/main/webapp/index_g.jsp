@@ -4,6 +4,9 @@
 <%@page import="java.io.Writer" %>
 <%@page import="java.io.Reader" %>
 <%@page import="java.io.StringReader" %>
+<%@page import="java.util.Arrays" %>
+<%@page import="java.util.List" %>
+<%@page import="java.util.ArrayList" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.HashMap" %>
 <%@page import="javax.script.ScriptEngine" %>
@@ -11,11 +14,6 @@
 <%!
 
 private final String baseDir = null;
-
-private final String[] srcList = {
-    "jquery-3.1.1.min.js",
-    "main.js"
-  };
 
 private static final Map<String,String> srcMap =
     new HashMap<String,String>();
@@ -86,12 +84,17 @@ if ("c".equals(type) ) {
 
 } else if ("s".equals(type) ) {
 
-  String[] svSrcList = {
-      "_pre.js",
-      request.getParameter("src"),
-      "_post.js" };
   ScriptEngine se = new ScriptEngineManager().
       getEngineByName("javascript");
+
+  List<String> svSrcList = new ArrayList<String>();
+  if (se.get("JSON") == null) {
+    svSrcList.add("_JSON.js");
+  }
+  svSrcList.add("_pre.js");
+  svSrcList.add(request.getParameter("src") );
+  svSrcList.add("_post.js");
+
   request.setAttribute("sfa-version", version);
   se.put("request", request);
   se.put("response", response);
@@ -108,6 +111,11 @@ if ("c".equals(type) ) {
 
 } else {
 
+  String[] srcList = {
+      "_jquery-3.1.1.min.js",
+      "main.js"
+  };
+
   response.reset();
   response.setHeader("Cache-Control", "no-cache");
   response.setHeader("Pragma", "no-cache");
@@ -123,7 +131,7 @@ if ("c".equals(type) ) {
     _out.write("<meta http-equiv=\"Content-Type\"");
     _out.write(" content=\"text/html;charset=UTF-8\" />");
     _out.write("<link rel=\"stylesheet\" type=\"text/css\"");
-    _out.write(" href=\"?type=c&src=style.css\" />");
+    _out.write(" href=\"?type=c&src=_style.css\" />");
     for (String src : srcList) {
       _out.write("<script src=\"?type=c&src=");
       _out.write(src);

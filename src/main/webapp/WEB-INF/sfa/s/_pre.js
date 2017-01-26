@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 //Nashorn / Rhino compatible
 if (typeof Java == 'undefined') {
@@ -23,17 +23,17 @@ if (typeof Java == 'undefined') {
 
 var dto = function() {
   var InputStreamReader = Java.type('java.io.InputStreamReader');
-  var reqIn = new InputStreamReader(request.getInputStream(), "UTF-8");
+  var System = Java.type('java.lang.System');
+  var reqIn = new InputStreamReader(request.getInputStream(), 'UTF-8');
   var c;
   var reqData = '';
   while ( (c = reqIn.read() ) != -1) {
     reqData += String.fromCharCode(c);
   }
-  var version = '' + request.getAttribute('sfa-version');
   return {
     reqData : JSON.parse(reqData),
     resData : {
-      version : version != '%%version%%' ? version : 'debug'
+      date : +System.currentTimeMillis()
     }
   };
 }();
