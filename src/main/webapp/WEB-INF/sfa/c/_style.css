@@ -16,33 +16,55 @@ TABLE {
 #appVersion {
   position: absolute;
   right: 0px;
-  bottom: 0px;
+  top: 0px;
   padding: 2px 4px 2px 4px;
   font-size: 8pt;
   background-color: #ffddaa;
+}
+
+#tabPane {
+  position: relative;
+  border-style: solid;
+  border-color: #666666;
+  border-width: 0px 0px 0px 1px;
+}
+
+#tabContent {
+  padding-top: 8px;
+}
+
+.tab {
+  display: inline-block;
+  cursor: default;
+  padding: 4px 8px 4px 8px;
+  border-style: solid;
+  border-color: #666666;
+  border-width: 1px 1px 0px 0px;
+  background-color: #f0f0f0;
 }
 
 .timestamp {
   font-size: 8pt;
 }
 
-#memTbl > TABLE {
+TABLE.flat {
   font-size: 11pt;
 }
 
-#memTbl > TABLE > TBODY > TR > TD {
+TABLE.flat > THEAD > TR > TH,
+TABLE.flat > TBODY > TR > TD {
   padding: 2px 8px 2px 8px;
 }
 
-#memTbl > TABLE > THEAD > TR {
+TABLE.flat > THEAD > TR {
   color: #ffffff;
   background-color: #666666;
 }
 
-#memTbl > TABLE > TBODY > TR:nth-of-type(even) {
+TABLE.flat > TBODY > TR:nth-of-type(even) {
   background-color: #eeeeee;
 }
 
-TABLE.layout-tbl {
+TABLE.layout {
   font-size: 8pt;
 }

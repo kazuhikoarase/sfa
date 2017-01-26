@@ -1,5 +1,7 @@
-"use strict";
+'use strict';
 !function() {
+
+  $('#memoryPoolTab').text('Memory Pool');
 
   var style = {
     initColor : '#ffcc00',
@@ -30,8 +32,7 @@
     append('used', usage.used, style.usedColor);
     append('committed', usage.committed, style.committedColor);
     append('max', usage.max, style.maxColor);
-    return $('<table></table>').
-      addClass('layout-tbl').append($tbody);
+    return $('<table></table>').addClass('layout').append($tbody);
   };
 
   var createUsageGraph = function(usage, max) {
@@ -57,7 +58,7 @@
     return $svg;
   };
 
-  var updateMem = function() {
+  var update = function() {
     sfa.invokeServer('memory_pool.js').done(function(data) {
 
       var $thead = $('<thead></thead>');
@@ -99,12 +100,12 @@
         $tbody.append($tr);
       });
 
-      $('#memTbl').children().remove();
-      $('#memTbl').append($('<table></table>').
+      $('#memoryPool').children().remove();
+      $('#memoryPool').append($('<table></table>').addClass('flat').
           append($thead).append($tbody) );
       var date = new Date();
       date.setTime(data.date);
-      $('#memTbl').append($('<span></span>').addClass('timestamp').
+      $('#memoryPool').append($('<span></span>').addClass('timestamp').
           text(sfa.formatDate(date) ) );
 
     }).fail(function(data) {
@@ -112,12 +113,10 @@
     });
   };
 
-  $('BODY').append($('<div></div>').attr('id', 'memTbl') );
-
-  var up = function() {
-    updateMem();
-    window.setTimeout(up, 2000);
+  var updateHandler = function() {
+    update();
+    window.setTimeout(updateHandler, 2000);
   };
-  up();
+  updateHandler();
 
 }();

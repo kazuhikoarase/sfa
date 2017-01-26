@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 $(function() {
 
   var assertEquals = function(expected, actual) {
@@ -7,7 +7,7 @@ $(function() {
     }
   };
 
-  var formatNumber = function(n) {
+  var formatNumber = function(n, digits) {
     var neg = n < 0;
     if (neg) {
       n = -n;
@@ -21,6 +21,20 @@ $(function() {
     s = sn + s;
     if (neg) {
       s = '-' + s;
+    }
+    if (digits) {
+      var f = n;
+      var b = 1;
+      for (var i = 0; i < digits; i += 1) {
+        f *= 10;
+        b *= 10;
+      }
+      f = Math.floor(f) % b;
+      var sf = '' + f;
+      while (sf.length < digits) {
+        sf = '0' + sf;
+      }
+      s = s + '.' + sf;
     }
     return s;
   };
@@ -49,6 +63,10 @@ $(function() {
   assertEquals('1,234', formatNumber(1234) );
   assertEquals('-1,234', formatNumber(-1234) );
   assertEquals('2,783,641,600', formatNumber(2783641600) );
+  assertEquals('1.2', formatNumber(1.23456, 1) );
+  assertEquals('-1.2', formatNumber(-1.23456, 1) );
+  assertEquals('1.23', formatNumber(1.23456, 2) );
+
   assertEquals('1970/01/01 09:00:00', function(){
     var date = new Date();
     date.setTime(0);
@@ -65,7 +83,27 @@ $(function() {
       attr({ width: w, height: h, viewBox: '0 0 ' + w + ' ' + h });
   };
 
-  var loadModule = function(src) {
+  var selectedTabIndex = 0;
+  var updateTabState = function() {
+    $('#tabPane').children().each(function() {
+      $(this).css('background-color',
+          $(this).index() == selectedTabIndex? 'transparent' : '');
+    });
+    $('#tabContent').children().each(function() {
+      $(this).css('display',
+          $(this).index() == selectedTabIndex? '' : 'none');
+    });
+  };
+
+  var loadModule = function(id, src) {
+    $('#tabPane').append($('<span></span>').attr('id', id + 'Tab').
+        addClass('tab').on('mousedown', function(event) {
+          event.preventDefault();
+          selectedTabIndex = $(this).index();
+          updateTabState();
+        }) );
+    $('#tabContent').append($('<div></div>').attr('id', id) );
+    updateTabState();
     return $.ajax({
       type : 'GET',
       url : '?type=c&src=' + src + '&t=' + new Date().getTime() 
@@ -89,11 +127,14 @@ $(function() {
 
   invokeServer('main.js').done(function(data) {
 
-    document.title = 'SFA | Memory Pool View';
+    document.title = 'SFA';
     $('BODY').append($('<span></span>').
         attr('id', 'appVersion').text('build: ' + data.version) );
+    $('BODY').append($('<div></div>').attr('id', 'tabPane') );
+    $('BODY').append($('<div></div>').attr('id', 'tabContent') );
 
-    loadModule('memory_pool.js');
+    loadModule('memoryPool', 'memory_pool.js');
+    loadModule('threadList', 'thread_list.js');
   });
 });
 
