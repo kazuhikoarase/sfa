@@ -24,12 +24,12 @@
   var update = function() {
     sfa.invokeServer('thread_list.js').done(function(data) {
 
-      var dt = (data.date - lastDate) * 10000;
       $.each(data.threads, function(i, thread) {
         var lastThread = lastThreads['' + thread.id];
         if (lastThread) {
-          thread.cpuUsage = (thread.cpuTime - lastThread.cpuTime) / dt;
-          thread.userUsage = (thread.userTime - lastThread.userTime) / dt;
+          var dt = thread.time - lastThread.time;
+          thread.cpuUsage = (thread.cpuTime - lastThread.cpuTime) / dt * 100;
+          thread.userUsage = (thread.userTime - lastThread.userTime) / dt * 100;
         }
       });
 
