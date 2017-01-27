@@ -125,7 +125,7 @@ $(function() {
   sfa.createSVG = createSVG;
   sfa.invokeServer = invokeServer;
 
-  invokeServer('main.js').done(function(data) {
+  invokeServer('_main.js').done(function(data) {
 
     document.title = 'SFA';
     $('BODY').append($('<span></span>').
@@ -134,6 +134,7 @@ $(function() {
     $('BODY').append($('<div></div>').attr('id', 'tabContent') );
 
     loadModule('runtimeInfo', 'runtime_info.js');
+    loadModule('classLoading', 'class_loading.js');
     loadModule('memoryPool', 'memory_pool.js');
     loadModule('threadList', 'thread_list.js');
   });

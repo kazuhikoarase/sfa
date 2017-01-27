@@ -30,6 +30,7 @@
         if (lastThread) {
           thread.cpuUsage = (thread.cpuTime - lastThread.cpuTime) / dt;
           thread.userUsage = (thread.userTime - lastThread.userTime) / dt;
+          thread.sysUsage = thread.cpuUsage - thread.userUsage;
         }
       });
 
@@ -49,6 +50,7 @@
         $tr.append($('<th></th>').text('State') );
         $tr.append($('<th></th>').text('Cpu(%)') );
         $tr.append($('<th></th>').text('User(%)') );
+        $tr.append($('<th></th>').text('Sys(%)') );
         $thead.append($tr);
       }();
 
@@ -65,12 +67,12 @@
             css('text-align', 'right').text(thread.id) );
         $tr.append($('<td></td>').text(thread.name) );
         $tr.append($('<td></td>').text(thread.state) );
-        $tr.append($('<td></td>').
-            css('text-align', 'right').
+        $tr.append($('<td></td>').css('text-align', 'right').
             css('padding-right', '20px').text(getUsage('cpuUsage') ) );
-        $tr.append($('<td></td>').
-            css('text-align', 'right').
+        $tr.append($('<td></td>').css('text-align', 'right').
             css('padding-right', '20px').text(getUsage('userUsage') ) );
+        $tr.append($('<td></td>').css('text-align', 'right').
+            css('padding-right', '20px').text(getUsage('sysUsage') ) );
 
         $tbody.append($tr);
       });

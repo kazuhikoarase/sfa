@@ -113,7 +113,7 @@ if ("c".equals(type) ) {
 
   String[] srcList = {
       "_jquery-3.1.1.min.js",
-      "main.js"
+      "_main.js"
   };
 
   response.reset();

@@ -16,7 +16,8 @@
     var $tbody = $('<tbody></tbody>');
     $.each(data.rt.info, function(i, info) {
       var $tr = $('<tr></tr>');
-      $tr.append($('<td></td>').text(info.key) );
+      $tr.append($('<td></td>').css('text-align', 'right').
+          text(info.key + ' :') );
       $tr.append($('<td></td>').text(info.val) );
       $tbody.append($tr);
     });
@@ -46,7 +47,8 @@
     var $tbody = $('<tbody></tbody>');
     $.each(props, function(i, prop) {
       var $tr = $('<tr></tr>');
-      $tr.append($('<td></td>').text(prop.key) );
+      $tr.append($('<td></td>').css('text-align', 'right').
+          text(prop.key + ' :') );
       $tr.append($('<td></td>').text(prop.val) );
       $tbody.append($tr);
     });
@@ -58,10 +60,7 @@
   var update = function() {
     sfa.invokeServer('runtime_info.js').done(function(data) {
 
-      
-
       $('#runtimeInfo').children().remove();
-      $('#runtimeInfo').append($('<h3></h3>').text('Info') );
       $('#runtimeInfo').append(createInfoTable(data) );
       $('#runtimeInfo').append($('<h3></h3>').text('System Properties') );
       $('#runtimeInfo').append(createPropTable(data) );
@@ -77,7 +76,7 @@
 
   var updateHandler = function() {
     update();
-    window.setTimeout(updateHandler, 30000);
+    window.setTimeout(updateHandler, 5 * 60000);
   };
   updateHandler();
 
