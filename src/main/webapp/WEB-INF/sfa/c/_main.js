@@ -86,10 +86,13 @@ $(function() {
       attr({ width: w, height: h, viewBox: '0 0 ' + w + ' ' + h });
   };
 
-  var selectedTabIndex = 0;
+  var getSelectedId = function() {
+    return location.hash? location.hash.substring(1) :
+      $('#tabContent').children().first().attr('id');
+  };
   var updateTabState = function() {
     $('#tabPane').children().each(function() {
-      if ($(this).index() == selectedTabIndex) {
+      if ($(this).attr('id') == getSelectedId() + 'Tab') {
         $(this).addClass('selected');
       } else {
         $(this).removeClass('selected');
@@ -97,16 +100,18 @@ $(function() {
     });
     $('#tabContent').children().each(function() {
       $(this).css('display',
-          $(this).index() == selectedTabIndex? '' : 'none');
+          $(this).attr('id') == getSelectedId()? '' : 'none');
     });
   };
+  $(window).on('hashchange', function(event) {
+    updateTabState();
+  });
 
   var loadModule = function(id, src) {
     $('#tabPane').append($('<span></span>').attr('id', id + 'Tab').
         addClass('tab').text('\u00a0').on('mousedown', function(event) {
           event.preventDefault();
-          selectedTabIndex = $(this).index();
-          updateTabState();
+          location.href = '#' + id;
         }) );
     $('#tabContent').append($('<div></div>').attr('id', id) );
     updateTabState();
