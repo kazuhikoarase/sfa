@@ -24,13 +24,14 @@ TABLE {
 
 #tabPane {
   position: relative;
+  font-size: 11pt;
   border-style: solid;
   border-color: #666666;
   border-width: 0px 0px 0px 1px;
 }
 
 #tabContent {
-  padding-top: 8px;
+  padding: 8px 0px 0px 4px;
 }
 
 .tab {

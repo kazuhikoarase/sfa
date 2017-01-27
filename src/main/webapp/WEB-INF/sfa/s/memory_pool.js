@@ -1,5 +1,6 @@
 'use strict';
 !function() {
+
   var getUsage = function(usage) {
     return usage? {
       init : +usage.getInit(),
@@ -8,9 +9,11 @@
       max : +usage.getMax()
     } : null;
   };
+
   var ManagementFactory = Java.type('java.lang.management.ManagementFactory');
-  var mem = [];
   var it = ManagementFactory.getMemoryPoolMXBeans().iterator();
+
+  var mem = [];
   while (it.hasNext() ) {
     var item = it.next();
     mem.push({
@@ -22,4 +25,5 @@
     });
   }
   dto.resData.mem = mem;
+
 }();

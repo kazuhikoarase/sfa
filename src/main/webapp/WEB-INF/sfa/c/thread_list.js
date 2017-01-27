@@ -67,10 +67,10 @@
         $tr.append($('<td></td>').text(thread.state) );
         $tr.append($('<td></td>').
             css('text-align', 'right').
-            css('padding-right', '12px').text(getUsage('cpuUsage') ) );
+            css('padding-right', '20px').text(getUsage('cpuUsage') ) );
         $tr.append($('<td></td>').
             css('text-align', 'right').
-            css('padding-right', '12px').text(getUsage('userUsage') ) );
+            css('padding-right', '20px').text(getUsage('userUsage') ) );
 
         $tbody.append($tr);
       });

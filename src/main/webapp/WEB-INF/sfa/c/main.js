@@ -133,6 +133,7 @@ $(function() {
     $('BODY').append($('<div></div>').attr('id', 'tabPane') );
     $('BODY').append($('<div></div>').attr('id', 'tabContent') );
 
+    loadModule('runtimeInfo', 'runtime_info.js');
     loadModule('memoryPool', 'memory_pool.js');
     loadModule('threadList', 'thread_list.js');
   });

@@ -115,7 +115,7 @@
 
   var updateHandler = function() {
     update();
-    window.setTimeout(updateHandler, 2000);
+    window.setTimeout(updateHandler, 5000);
   };
   updateHandler();
 

@@ -4,6 +4,7 @@
   var ManagementFactory = Java.type('java.lang.management.ManagementFactory');
   var threadBean = ManagementFactory.getThreadMXBean();
   var ids = threadBean.getAllThreadIds();
+
   var threads = [];
   for (var i = 0; i < ids.length; i += 1) {
     var id = ids[i];
