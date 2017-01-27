@@ -44,6 +44,10 @@ TABLE {
   background-color: #f0f0f0;
 }
 
+.tab.selected {
+  background-color: transparent;
+}
+
 .timestamp {
   font-size: 8pt;
 }

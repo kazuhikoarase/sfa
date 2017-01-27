@@ -56,22 +56,25 @@ $(function() {
         nToS(date.getSeconds(), 2);
     };
   }();
-  
-  assertEquals('0', formatNumber(0) );
-  assertEquals('0', formatNumber(-0) );
-  assertEquals('123', formatNumber(123) );
-  assertEquals('1,234', formatNumber(1234) );
-  assertEquals('-1,234', formatNumber(-1234) );
-  assertEquals('2,783,641,600', formatNumber(2783641600) );
-  assertEquals('1.2', formatNumber(1.23456, 1) );
-  assertEquals('-1.2', formatNumber(-1.23456, 1) );
-  assertEquals('1.23', formatNumber(1.23456, 2) );
 
-  assertEquals('1970/01/01 09:00:00', function(){
-    var date = new Date();
-    date.setTime(0);
-    return formatDate(date);
-  }() );
+  !function() {
+    // self test
+    assertEquals('0', formatNumber(0) );
+    assertEquals('0', formatNumber(-0) );
+    assertEquals('123', formatNumber(123) );
+    assertEquals('1,234', formatNumber(1234) );
+    assertEquals('-1,234', formatNumber(-1234) );
+    assertEquals('2,783,641,600', formatNumber(2783641600) );
+    assertEquals('1.2', formatNumber(1.23456, 1) );
+    assertEquals('-1.2', formatNumber(-1.23456, 1) );
+    assertEquals('1.23', formatNumber(1.23456, 2) );
+
+    assertEquals('1970/01/01 09:00:00', function(){
+      var date = new Date();
+      date.setTime(0);
+      return formatDate(date);
+    }() );
+  }();
 
   var createSVGElement = function(tagName) {
     return $(document.createElementNS(
@@ -86,8 +89,11 @@ $(function() {
   var selectedTabIndex = 0;
   var updateTabState = function() {
     $('#tabPane').children().each(function() {
-      $(this).css('background-color',
-          $(this).index() == selectedTabIndex? 'transparent' : '');
+      if ($(this).index() == selectedTabIndex) {
+        $(this).addClass('selected');
+      } else {
+        $(this).removeClass('selected');
+      }
     });
     $('#tabContent').children().each(function() {
       $(this).css('display',
@@ -97,7 +103,7 @@ $(function() {
 
   var loadModule = function(id, src) {
     $('#tabPane').append($('<span></span>').attr('id', id + 'Tab').
-        addClass('tab').on('mousedown', function(event) {
+        addClass('tab').text('\u00a0').on('mousedown', function(event) {
           event.preventDefault();
           selectedTabIndex = $(this).index();
           updateTabState();

@@ -48,6 +48,7 @@
     $.each(props, function(i, prop) {
       var $tr = $('<tr></tr>');
       $tr.append($('<td></td>').css('text-align', 'right').
+          css('white-space', 'nowrap').
           text(prop.key + ' :') );
       $tr.append($('<td></td>').text(prop.val) );
       $tbody.append($tr);
