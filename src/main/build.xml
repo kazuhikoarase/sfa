@@ -8,7 +8,7 @@
     <copy file="index_g.jsp" tofile="${dest-jsp}" overwrite="true" />
     <replace file="${dest-jsp}" token="%%version%%" value="${timestamp}" />
     <replace file="${dest-jsp}" token="//%%break%%"
-      value="if (src == null) { return null; }" />
+      value="if (path != null) { return null; }" />
     <replace file="${dest-jsp}" token="//%%src%%" value="${srcString}" />
   </target>
 </project>

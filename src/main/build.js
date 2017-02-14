@@ -1,12 +1,10 @@
 
-var String = java.lang.String;
 var Integer = java.lang.Integer;
 var System = java.lang.System;
 var File = java.io.File;
 var StringWriter = java.io.StringWriter;
 var PrintWriter = java.io.PrintWriter;
-var BufferedReader = java.io.BufferedReader;
-var InputStreamReader = java.io.InputStreamReader;
+var BufferedInputStream = java.io.BufferedInputStream;
 var FileInputStream = java.io.FileInputStream;
 
 var basedir = project.getProperty("basedir");
@@ -17,28 +15,26 @@ try {
 
   var buildSrc = function(dir, file) {
 
-    var srcIn = new BufferedReader(new InputStreamReader(
-        new FileInputStream(file), 'UTF-8') );
+    var srcIn = new BufferedInputStream(new FileInputStream(file) );
     try {
-      var line;
-      while ( (line = srcIn.readLine() ) != null) {
-        line = line.trim();
-        out.print('  src.append("');
-        for (var i = 0; i < line.length(); i += 1) {
-          var c = '' + line.substring(i, i + 1);
-          var code = +line.charAt(i);
-          if (c == '\\') {
-            out.print('\\\\');
-          } else if (c == '"') {
-            out.print('\\"');
-          } else if (0x20 <= code && code <= 0x7e) {
-            out.print(c);
-          } else {
-            out.print(String.format('\\u%04x', Integer.valueOf(code) ) );
-          }
+      var b;
+      out.print('  src.append("');
+      while ( (b = srcIn.read() ) != -1) {
+        var c = String.fromCharCode(b & 0xff);
+        if (c == '\\') {
+          out.print('\\\\');
+        } else if (c == '"') {
+          out.print('\\"');
+        } else if (0x20 <= b && b <= 0x7e) {
+          out.print(c);
+        } else {
+          out.print('\\');
+          out.print(Integer.valueOf( (b >>> 6) & 0x7) );
+          out.print(Integer.valueOf( (b >>> 3) & 0x7) );
+          out.print(Integer.valueOf(b & 0x7) );
         }
-        out.println('\\n");');
       }
+      out.println('\\n");');
     } finally {
       srcIn.close();
     }

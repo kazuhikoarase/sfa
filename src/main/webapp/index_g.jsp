@@ -1,9 +1,13 @@
 <%@page import="java.io.File" %>
+<%@page import="java.io.InputStream" %>
+<%@page import="java.io.OutputStream" %>
 <%@page import="java.io.FileInputStream" %>
-<%@page import="java.io.InputStreamReader" %>
-<%@page import="java.io.Writer" %>
+<%@page import="java.io.BufferedInputStream" %>
+<%@page import="java.io.BufferedOutputStream" %>
+<%@page import="java.io.ByteArrayInputStream" %>
 <%@page import="java.io.Reader" %>
-<%@page import="java.io.StringReader" %>
+<%@page import="java.io.Writer" %>
+<%@page import="java.io.InputStreamReader" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
@@ -18,11 +22,11 @@ private final String baseDir = null;
 private static final Map<String,String> srcMap =
     new HashMap<String,String>();
 
-private final Reader getResourceAsReader(String path)
+private final InputStream getResourceAsStream(String path)
 throws Exception {
   String src = srcMap.get(path);
   if (src != null) {
-    return new StringReader(src);
+    return new ByteArrayInputStream(src.getBytes("ISO-8859-1") );
   }
   //%%break%%
   File dir = new File(baseDir != null? baseDir :
@@ -33,7 +37,7 @@ throws Exception {
   } else if (!file.getCanonicalPath().startsWith(dir.getCanonicalPath() ) ) {
     return null;
   }
-  return new InputStreamReader(new FileInputStream(file), "UTF-8");
+  return new FileInputStream(file);
 }
 
 %><%
@@ -45,11 +49,13 @@ if ("c".equals(type) ) {
 
   String src = request.getParameter("src");
 
-  Reader in = getResourceAsReader("c/" + src);
+  InputStream in = getResourceAsStream("c/" + src);
   if (in == null) {
     response.sendError(HttpServletResponse.SC_NOT_FOUND);
     return;
   }
+
+  in = new BufferedInputStream(in);
 
   try {
 
@@ -59,18 +65,25 @@ if ("c".equals(type) ) {
     response.setIntHeader("Expires", 0);
 
     if (src.endsWith(".js") ) {
-      response.setContentType("text/javascript;charset=UTF-8");
+      response.setContentType("text/javascript");
     } else if (src.endsWith(".json") ) {
-      response.setContentType("application/json;charset=UTF-8");
+      response.setContentType("application/json");
     } else if (src.endsWith(".css") ) {
-      response.setContentType("text/css;charset=UTF-8");
+      response.setContentType("text/css");
+    } else if (src.endsWith(".png") ) {
+      response.setContentType("image/jpg");
+    } else if (src.endsWith(".jpg") ) {
+      response.setContentType("image/jpg");
+    } else if (src.endsWith(".gif") ) {
+      response.setContentType("image/gif");
     } else {
-      response.setContentType("text/plain;charset=UTF-8");
+      response.setContentType("application/octet-stream");
     }
 
-    Writer _out = response.getWriter();
+    OutputStream _out = new BufferedOutputStream(
+        response.getOutputStream() );
     try {
-      char[] buf = new char[4096];
+      byte[] buf = new byte[4096];
       int len;
       while ( (len = in.read(buf) ) != -1) {
         _out.write(buf, 0, len);
@@ -100,7 +113,8 @@ if ("c".equals(type) ) {
   se.put("response", response);
   se.put("application", this);
   for (String src : svSrcList) {
-    Reader in = getResourceAsReader("s/" + src);
+    Reader in = new InputStreamReader(
+        getResourceAsStream("s/" + src), "UTF-8");
     try {
       se.put(ScriptEngine.FILENAME, src);
       se.eval(in);
