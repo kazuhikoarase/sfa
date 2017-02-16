@@ -17,16 +17,25 @@
 <%@page import="javax.script.ScriptEngineManager" %>
 <%!
 
-private final String baseDir = null;
+private static final String baseDir = null;
 
-private static final Map<String,String> srcMap =
-    new HashMap<String,String>();
+private static final String[][] mimeTypes = {
+  {".js", "text/javascript"},
+  {".json", "application/json"},
+  {".css", "text/css"},
+  {".gif", "image/gif"},
+  {".jpg", "image/jpg"},
+  {".png", "image/png"}
+}; 
+
+private static final Map<String,byte[]> srcMap =
+    new HashMap<String,byte[]>();
 
 private final InputStream getResourceAsStream(String path)
 throws Exception {
-  String src = srcMap.get(path);
+  byte[] src = srcMap.get(path);
   if (src != null) {
-    return new ByteArrayInputStream(src.getBytes("ISO-8859-1") );
+    return new ByteArrayInputStream(src);
   }
   //%%break%%
   File dir = new File(baseDir != null? baseDir :
@@ -64,21 +73,14 @@ if ("c".equals(type) ) {
     response.setHeader("Pragma", "no-cache");
     response.setIntHeader("Expires", 0);
 
-    if (src.endsWith(".js") ) {
-      response.setContentType("text/javascript");
-    } else if (src.endsWith(".json") ) {
-      response.setContentType("application/json");
-    } else if (src.endsWith(".css") ) {
-      response.setContentType("text/css");
-    } else if (src.endsWith(".png") ) {
-      response.setContentType("image/jpg");
-    } else if (src.endsWith(".jpg") ) {
-      response.setContentType("image/jpg");
-    } else if (src.endsWith(".gif") ) {
-      response.setContentType("image/gif");
-    } else {
-      response.setContentType("application/octet-stream");
+    String contentType = "application/octet-stream";
+    for (String[] mimeType : mimeTypes) {
+      if (src.endsWith(mimeType[0]) ) {
+        contentType = mimeType[1];
+        break;
+      }
     }
+    response.setContentType(contentType);
 
     OutputStream _out = new BufferedOutputStream(
         response.getOutputStream() );
@@ -144,6 +146,8 @@ if ("c".equals(type) ) {
     _out.write("<head>");
     _out.write("<meta http-equiv=\"Content-Type\"");
     _out.write(" content=\"text/html;charset=UTF-8\" />");
+    _out.write("<link rel=\"icon\" type=\"image/png\"");
+    _out.write(" href=\"?type=c&src=_icon.png\" />");
     _out.write("<link rel=\"stylesheet\" type=\"text/css\"");
     _out.write(" href=\"?type=c&src=_style.css\" />");
     for (String src : srcList) {
