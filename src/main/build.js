@@ -57,7 +57,7 @@ try {
       out.print(dir + '/' + file.getName() );
       out.print('", ');
       buildSrc(dir, file);
-      out.println('.toString().getBytes("ISO-8859-1") );');
+      out.println('.getBytes("ISO-8859-1") );');
     }
   };
 
