@@ -3,9 +3,9 @@
     <tstamp >
       <format property="timestamp" pattern="yyyy-MMdd-HHmm" />
     </tstamp>
-    <property name="dest-jsp" value="index.jsp" />
+    <property name="dest-jsp" value="index.jspx" />
     <script language="javascript" src="build.js"/>
-    <copy file="index_g.jsp" tofile="${dest-jsp}" overwrite="true" />
+    <copy file="index_g.jspx" tofile="${dest-jsp}" overwrite="true" />
     <replace file="${dest-jsp}" token="%%version%%" value="${timestamp}" />
     <replace file="${dest-jsp}" token="//%%break%%"
       value="if (path != null) { return null; }" />

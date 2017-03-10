@@ -1,21 +1,25 @@
-<%@page import="java.io.File" %>
-<%@page import="java.io.InputStream" %>
-<%@page import="java.io.OutputStream" %>
-<%@page import="java.io.FileInputStream" %>
-<%@page import="java.io.BufferedInputStream" %>
-<%@page import="java.io.BufferedOutputStream" %>
-<%@page import="java.io.ByteArrayInputStream" %>
-<%@page import="java.io.Reader" %>
-<%@page import="java.io.Writer" %>
-<%@page import="java.io.InputStreamReader" %>
-<%@page import="java.util.Arrays" %>
-<%@page import="java.util.List" %>
-<%@page import="java.util.ArrayList" %>
-<%@page import="java.util.Map" %>
-<%@page import="java.util.HashMap" %>
-<%@page import="javax.script.ScriptEngine" %>
-<%@page import="javax.script.ScriptEngineManager" %>
-<%!
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+
+<jsp:directive.page import="java.io.File" />
+<jsp:directive.page import="java.io.InputStream" />
+<jsp:directive.page import="java.io.OutputStream" />
+<jsp:directive.page import="java.io.FileInputStream" />
+<jsp:directive.page import="java.io.BufferedInputStream" />
+<jsp:directive.page import="java.io.BufferedOutputStream" />
+<jsp:directive.page import="java.io.ByteArrayInputStream" />
+<jsp:directive.page import="java.io.Reader" />
+<jsp:directive.page import="java.io.Writer" />
+<jsp:directive.page import="java.io.InputStreamReader" />
+<jsp:directive.page import="java.util.Arrays" />
+<jsp:directive.page import="java.util.List" />
+<jsp:directive.page import="java.util.ArrayList" />
+<jsp:directive.page import="java.util.Map" />
+<jsp:directive.page import="java.util.HashMap" />
+<jsp:directive.page import="javax.script.ScriptEngine" />
+<jsp:directive.page import="javax.script.ScriptEngineManager" />
+
+<jsp:declaration><![CDATA[
 
 private static final String baseDir = null;
 
@@ -49,7 +53,8 @@ throws Exception {
   return new FileInputStream(file);
 }
 
-%><%
+]]></jsp:declaration>
+<jsp:scriptlet><![CDATA[
 
 final String version = "%%version%%";
 final String type = request.getParameter("type");
@@ -164,6 +169,8 @@ if ("c".equals(type) ) {
   }
 }
 
-%><%!
+]]></jsp:scriptlet>
+<jsp:declaration><![CDATA[
 //%%src%%
-%>
+]]></jsp:declaration>
+</jsp:root>
