@@ -58,7 +58,7 @@
     return $svg;
   };
 
-  var update = function() {
+  var update = function(next) {
     sfa.invokeServer('memory_pool.js').done(function(data) {
 
       var $thead = $('<thead></thead>');
@@ -110,12 +110,15 @@
 
     }).fail(function(data) {
 
+    }).always(function(data) {
+      next();
     });
   };
 
   var updateHandler = function() {
-    update();
-    window.setTimeout(updateHandler, 5000);
+    update(function() {
+      window.setTimeout(updateHandler, 5000);
+    });
   };
   updateHandler();
 

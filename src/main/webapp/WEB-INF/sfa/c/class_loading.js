@@ -27,7 +27,7 @@
       append($thead).append($tbody);
   };
 
-  var update = function() {
+  var update = function(next) {
     sfa.invokeServer('class_loading.js').done(function(data) {
 
       $('#classLoading').children().remove();
@@ -39,12 +39,15 @@
 
     }).fail(function(data) {
 
+    }).always(function(data) {
+      next();
     });
   };
 
   var updateHandler = function() {
-    update();
-    window.setTimeout(updateHandler, 60000);
+    update(function() {
+      window.setTimeout(updateHandler, 60000);
+    });
   };
   updateHandler();
 
