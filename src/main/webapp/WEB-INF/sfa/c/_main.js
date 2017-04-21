@@ -119,6 +119,11 @@ $(function() {
       type : 'GET',
       url : '?type=c&src=' + src + '&t=' + new Date().getTime() 
     });
+    /*
+    $('HEAD').append($('<script></script>').
+        attr('type', 'text/javascript').
+        attr('src', '?type=c&src=' + src + '&t=' + new Date().getTime() ) );
+    */
   };
 
   var invokeServer = function(src, data) {
@@ -130,11 +135,35 @@ $(function() {
     });
   };
 
+  var startLoader = function(load, timeout) {
+    var loading = false;
+    var loader = {
+      start : function() {
+        if (loading) {
+          return;
+        }
+        loading = true;
+        load(loader);
+      },
+      end : function() {
+        loading = false;
+      }
+    };
+    var updateHandler = function() {
+      if (!loading) {
+        loader.start();
+      }
+      window.setTimeout(updateHandler, timeout);
+    };
+    updateHandler();
+  };
+
   sfa.formatNumber = formatNumber;
   sfa.formatDate = formatDate;
   sfa.createSVGElement = createSVGElement;
   sfa.createSVG = createSVG;
   sfa.invokeServer = invokeServer;
+  sfa.startLoader = startLoader;
 
   invokeServer('_main.js').done(function(data) {
 

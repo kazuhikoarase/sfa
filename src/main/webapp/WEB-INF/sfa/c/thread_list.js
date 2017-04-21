@@ -21,7 +21,7 @@
     return t1.id > t2.id? -1 : 1; 
   };
 
-  var update = function(next) {
+  sfa.startLoader(function(loader) {
     sfa.invokeServer('thread_list.js').done(function(data) {
 
       $.each(data.threads, function(i, thread) {
@@ -84,15 +84,8 @@
     }).fail(function(data) {
 
     }).always(function(data) {
-      next();
+      loader.end();
     });
-  };
-
-  var updateHandler = function() {
-    update(function() {
-      window.setTimeout(updateHandler, 2000);
-    });
-  };
-  updateHandler();
+  }, 2000);
 
 }();

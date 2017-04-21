@@ -58,7 +58,7 @@
       append($thead).append($tbody);
   };
 
-  var update = function(next) {
+  sfa.startLoader(function(loader) {
     sfa.invokeServer('runtime_info.js').done(function(data) {
 
       $('#runtimeInfo').children().remove();
@@ -73,15 +73,8 @@
     }).fail(function(data) {
 
     }).always(function(data) {
-      next();
+      loader.end();
     });
-  };
-
-  var updateHandler = function() {
-    update(function() {
-      window.setTimeout(updateHandler, 5 * 60000);
-    });
-  };
-  updateHandler();
+  }, 5 * 60000);
 
 }();
