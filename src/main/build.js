@@ -25,13 +25,18 @@ try {
           out.print('\\\\');
         } else if (c == '"') {
           out.print('\\"');
-        } else if (c == '\r') {
-          out.print('\\r');
-        } else if (c == '\n') {
-          out.print('\\n');
+        } else if (c == '\b') {
+          out.print('\\b');
         } else if (c == '\t') {
           out.print('\\t');
-        } else if (0x20 <= b && b <= 0x7e) {
+        } else if (c == '\n') {
+          out.print('\\n');
+        } else if (c == '\f') {
+          out.print('\\f');
+        } else if (c == '\r') {
+          out.print('\\r');
+        } else if (0x20 <= b && b <= 0x7e &&
+            c != '<' && c != '>' && c != ']') {
           out.print(c);
         } else {
           out.print('\\');
@@ -40,7 +45,7 @@ try {
           out.print(Integer.valueOf(b & 0x7) );
         }
       }
-      out.print('\\n"');
+      out.print('"');
     } finally {
       srcIn.close();
     }
