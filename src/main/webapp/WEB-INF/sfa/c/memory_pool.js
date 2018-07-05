@@ -36,6 +36,9 @@
   };
 
   var createUsageGraph = function(usage, max) {
+    if (max == -1) {
+      max = usage.committed;
+    }
     var drawLine = function(x, color) {
       $svg.append(sfa.createSVGElement('path').
           attr('d', 'M' + x + ' 0L' + x + ' ' + h).
